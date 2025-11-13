@@ -11,12 +11,12 @@ const CONFIG = {
   // 英雄区块导航
   STARTER_HERO_ENABLE: true, // 开启英雄区
   STARTER_HERO_TITLE_1: 'PRO+', // 英雄区文字
-  STARTER_HERO_TITLE_2: '一站式登录 永不丢失!', // 英雄区文字
+  STARTER_HERO_TITLE_2: '一站式资源仓库 永不丢失!', // 英雄区文字
   // 英雄区两个按钮，如果TEXT留空则隐藏按钮
   STARTER_HERO_BUTTON_1_TEXT: '会员登录', // 英雄区按钮
   STARTER_HERO_BUTTON_1_URL:
     '/about', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_TEXT: '查看最新合集!', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_TEXT: '会员注册（请联系客服）', // 英雄区按钮
   STARTER_HERO_BUTTON_2_URL: 'https://fcssr.top/', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
 
@@ -29,7 +29,7 @@ const CONFIG = {
   STARTER_NAV_BUTTON_1_URL: 'https://1zs.top/',
 
   STARTER_NAV_BUTTON_2_TEXT: '关于PRO+',
-  STARTER_NAV_BUTTON_2_URL: 'https://1zs.top/',
+  STARTER_NAV_BUTTON_2_URL: 'https://pro-plus.top/',
 
   // 特性区块
   STARTER_FEATURE_ENABLE: true&false, // 特性区块开关
