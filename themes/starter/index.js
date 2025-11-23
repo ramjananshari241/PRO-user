@@ -67,7 +67,7 @@ const LayoutBase = props => {
 
        <div 
         id='main-wrapper'
-        className="flex-1 relative overflow-y-hidden">
+        className="flex-1 relative overflow-y-auto">
         {children}
       </div>
 
