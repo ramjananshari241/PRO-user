@@ -7,6 +7,24 @@
  */
 const Style = () => {
   return <style jsx global>{`
+  
+  /** 强行隐藏底部乱码数字及统计插件容器 (物理屏蔽方案) **/
+  #busuanzi_container_site_pv,
+  #busuanzi_container_site_uv,
+  #busuanzi_value_site_pv,
+  #busuanzi_value_site_uv,
+  .busuanzi_container_site_pv,
+  #notion-next-statistics,
+  footer,
+  .footer,
+  #footer {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
+  }
 
   #theme-starter .sticky{
     position: fixed;
@@ -207,4 +225,4 @@ const Style = () => {
   `}</style>
 }
 
-export { Style }
+export { Style } // 注意：这里使用了 export { Style } 以匹配 Starter 主题的引用习惯
