@@ -10,9 +10,9 @@ import dynamic from 'next/dynamic'
 const Index = (props) => {
   const { theme } = useGlobal()
   
-  // 调试日志
-  console.log('--- 首页数据载入检查 ---')
-  console.log('当前页面获取到的总数据量:', props?.allPages?.length || 0)
+  // 调试日志：如果数字 > 0，登录就通了
+  console.log('--- 首页载入检查 ---')
+  console.log('已获取到总页面数:', props?.allPages?.length || 0)
 
   const ThemeComponents = dynamic(() => import(`@/themes/${theme}`), { ssr: true })
   return <ThemeComponents {...props} />
@@ -22,16 +22,16 @@ const Index = (props) => {
  * 静态内容抓取
  */
 export async function getStaticProps() {
-  const from = 'archive' // 强制绕过首页缓存优化，抓取全量数据
+  const from = 'archive' // 强制绕过首页优化，抓取全量数据
   const props = await getGlobalData({ from })
 
-  // 确保数据源被正确解构
+  // 确保数据源被正确解构并传递给 props
   return {
     props: {
       ...props,
       allPages: props.allPages || props.posts || []
-    },
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND
+    }
+    // 注意：已移除 revalidate 参数，以适配 Cloudflare Pages 静态导出
   }
 }
 
