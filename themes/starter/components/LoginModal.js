@@ -15,7 +15,6 @@ const LoginModal = (props) => {
     openSearch: () => {
       setIsOpen(true)
       setError('')
-      console.log('LoginModal Ready. Data count:', (allPages || posts || []).length)
     }
   }))
 
@@ -28,33 +27,34 @@ const LoginModal = (props) => {
     const inputSlug = username.trim()
     const inputPwd = password.trim()
 
-    console.log('Validating login for:', inputSlug)
+    console.log('--- 登录尝试 ---')
+    console.log('可用数据条数:', pageList.length)
 
     const matchedUser = pageList.find(p => {
       const dbSlug = String(p.slug || '').trim()
-      const dbPwd = String(p.member_pwd || '').trim() // 匹配我们在后端存入的隐藏密码
+      const dbPwd = String(p.member_pwd || '').trim()
       
       if (dbSlug === inputSlug) {
-          console.log('User found! Comparing passwords...')
+          console.log('匹配到账号，数据库密码:', dbPwd)
           return dbPwd === inputPwd
       }
       return false
     })
 
     if (matchedUser) {
-      console.log('Login Success!')
+      console.log('验证成功，正在跳转...')
+      setIsOpen(false)
       window.location.href = `/${matchedUser.slug}`
     } else {
       setLoading(false)
       setError('账号或密码不正确')
-      console.warn('Login failed.')
     }
   }
 
   if (!mounted || !isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/95 backdrop-blur-md transition-all">
       <div className="relative w-full max-w-sm bg-[#1a1a1a] border border-white/10 rounded-2xl shadow-2xl p-8 overflow-hidden">
         <div className="absolute top-0 left-0 h-1 w-full bg-red-700"></div>
         <h3 className="text-2xl font-bold text-white text-center mb-8 tracking-widest">会员登录</h3>
