@@ -1,33 +1,31 @@
 import { useState, useImperativeHandle, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
-/**
- * PRO+ Vercel-Style 现代登录弹窗
- */
 const LoginModal = (props) => {
   const { cRef, allPages, posts } = props
   const [isOpen, setIsOpen] = useState(false)
+  const [isAnimate, setIsAnimate] = useState(false) // 用于控制动效
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showModal, setShowModal] = useState(false) // 控制动画状态
 
-  // 弹出逻辑：先渲染组件，再延时触发动画
+  // 处理动效开启
   useImperativeHandle(cRef, () => ({
-    openSearch: () => {
+    openModal: () => {
       setIsOpen(true)
-      setTimeout(() => setShowModal(true), 10)
+      setTimeout(() => setIsAnimate(true), 10)
       setError('')
     }
   }))
 
-  const closeMe = () => {
-    setShowModal(false)
-    setTimeout(() => setIsOpen(false), 300) // 等动画结束再销毁
+  const closeModal = () => {
+    setIsAnimate(false)
+    setTimeout(() => setIsOpen(false), 300)
   }
 
   const handleLogin = (e) => {
-    e.preventDefault()
+    e?.preventDefault()
     setError('')
     setLoading(true)
 
@@ -37,7 +35,7 @@ const LoginModal = (props) => {
 
     const matchedUser = pageList.find(p => {
       const dbSlug = String(p.slug || '').trim()
-      const dbPwd = String(p.member_pwd || '').trim()
+      const dbPwd = String(p.member_pwd || p.password || '').trim()
       return dbSlug === inputSlug && dbPwd === inputPwd
     })
 
@@ -45,80 +43,70 @@ const LoginModal = (props) => {
       window.location.href = `/${matchedUser.slug}`
     } else {
       setLoading(false)
-      setError('账号或密码不匹配，请检查输入')
+      setError('账号或密码不正确')
     }
   }
 
   if (!isOpen) return null
 
   return (
-    <div 
-      className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl transition-opacity duration-300 ${showModal ? 'opacity-100' : 'opacity-0'}`}
-      onClick={closeMe}
-    >
+    <div className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-all duration-300 ${isAnimate ? 'bg-black/80 backdrop-blur-md' : 'bg-black/0 backdrop-blur-none'}`}>
       <div 
-        className={`relative w-full max-w-[400px] bg-[#000] border border-[#333] rounded-[20px] p-10 shadow-[0_0_100px_-20px_rgba(255,255,255,0.1)] transition-all duration-300 ease-out ${showModal ? 'translate-y-0 scale-100' : 'translate-y-10 scale-95'}`}
-        onClick={(e) => e.stopPropagation()}
+        className={`relative w-full max-w-sm bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-[0_24px_48px_rgba(0,0,0,0.5)] p-8 transition-all duration-300 transform ${isAnimate ? 'scale-100 opacity-100 translate-y-0' : 'scale-95 opacity-0 translate-y-4'}`}
       >
-        {/* 标题 */}
         <div className="text-center mb-10">
-          <h3 className="text-2xl font-bold text-white tracking-tighter">会员登录</h3>
-          <p className="text-gray-500 text-sm mt-1">进入 PRO+ 一站式收藏空间</p>
+          <h3 className="text-2xl font-semibold text-white tracking-tight">会员登录</h3>
         </div>
 
-        <form onSubmit={handleLogin} className="space-y-6">
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-gray-400 ml-1">账号</label>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div className="group">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="账号"
               required
-              className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-lg text-white text-sm outline-none focus:border-white transition-all duration-200 placeholder:text-gray-700"
+              className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-lg text-white outline-none transition-all duration-200 focus:border-white/30 focus:bg-white/[0.05] placeholder:text-gray-600"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-gray-400 ml-1">密码</label>
+          <div className="space-y-3">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="密码"
               required
-              className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-lg text-white text-sm outline-none focus:border-white transition-all duration-200 placeholder:text-gray-700"
+              className="w-full px-4 py-3 bg-white/[0.03] border border-white/10 rounded-lg text-white outline-none transition-all duration-200 focus:border-white/30 focus:bg-white/[0.05] placeholder:text-gray-600"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <div className="flex justify-end px-1">
+              <a 
+                href="#" // 这里后续填入你的找回密码链接
+                onClick={(e) => { e.preventDefault(); alert('请联系管理员找回密码') }}
+                className="text-xs text-gray-500 hover:text-white transition-colors"
+              >
+                忘记密码？
+              </a>
+            </div>
           </div>
 
-          {error && <p className="text-[#ff4d4d] text-xs text-center font-medium animate-pulse">{error}</p>}
+          {error && <p className="text-red-500 text-xs text-center py-2">{error}</p>}
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-white text-black text-sm font-bold rounded-lg hover:bg-gray-200 transition-all duration-300 transform active:scale-[0.98] disabled:opacity-50 mt-2"
+            className="w-full py-3 bg-white text-black font-bold rounded-lg transition-all duration-300 hover:bg-gray-200 active:scale-[0.98] shadow-lg disabled:opacity-50"
           >
-            {loading ? '正在验证...' : '确认进入'}
+            {loading ? '正在进入...' : '确认进入'}
           </button>
         </form>
 
-        <div className="mt-8 flex flex-col items-center gap-3 text-[12px]">
-            {/* 忘记密码链接 */}
-            <a 
-              href="https://pro-plus.top/contact" 
-              target="_blank" 
-              className="text-gray-500 hover:text-white transition-colors duration-200"
-            >
-              忘记密码？
-            </a>
-
-            <button 
-              onClick={closeMe}
-              className="text-gray-600 hover:text-gray-400 transition-colors"
-            >
-              返回首页
-            </button>
-        </div>
+        <button 
+          onClick={closeModal}
+          className="w-full mt-6 text-gray-500 text-xs hover:text-gray-300 transition-colors"
+        >
+          返回首页
+        </button>
       </div>
     </div>
   )
