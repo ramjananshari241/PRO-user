@@ -17,7 +17,7 @@ const CONFIG = {
   STARTER_HERO_BUTTON_1_URL:
     '/about', // 英雄区按钮
   STARTER_HERO_BUTTON_2_TEXT: '注册说明', // 英雄区按钮
-  STARTER_HERO_BUTTON_2_URL: 'https://fcssr.top/', // 英雄区按钮
+  STARTER_HERO_BUTTON_2_URL: 'https://pro-plus.top/', // 英雄区按钮
   STARTER_HERO_BUTTON_2_ICON: '', // 英雄区按钮2的图标，不需要则留空
 
   // 英雄区配图，如需隐藏，改为空值即可 ''
@@ -26,10 +26,10 @@ const CONFIG = {
 
   // 顶部右侧导航暗流
   STARTER_NAV_BUTTON_1_TEXT: ' ',
-  STARTER_NAV_BUTTON_1_URL: 'https://1zs.top/',
+  STARTER_NAV_BUTTON_1_URL: '',
 
   STARTER_NAV_BUTTON_2_TEXT: '',
-  STARTER_NAV_BUTTON_2_URL: 'https://pro-plus.top/',
+  STARTER_NAV_BUTTON_2_URL: '',
 
   // 特性区块
   STARTER_FEATURE_ENABLE: true&false, // 特性区块开关
