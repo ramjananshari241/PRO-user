@@ -1,75 +1,36 @@
 /* eslint-disable react/no-unknown-property */
-
-/**
- * Starter主题专用全局样式 - 彻底去乱码稳健版
- */
 const Style = () => {
   return <style jsx global>{`
-
-  /** 1. 强行锁定页面高度，禁止多余的滚动 (因为登录页不需要滚动) **/
-  html, body {
-      overflow-x: hidden;
-      overflow-y: auto;
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      background-color: black;
-  }
-
-  /** 2. 暴力隐藏所有统计节点、页脚以及可能在滚动时跳出来的容器 **/
+  
+  /** 彻底强行隐藏底部乱码 **/
   #busuanzi_container_site_pv,
   #busuanzi_container_site_uv,
-  #busuanzi_container_page_pv,
-  #busuanzi_value_site_pv,
-  #busuanzi_value_site_uv,
-  #busuanzi_value_page_pv,
   .busuanzi_container_site_pv,
-  #notion-next-statistics,
-  footer,
-  .footer,
-  #footer,
-  [id*="busuanzi"],
-  [class*="busuanzi"] {
+  footer, footer *, .footer {
       display: none !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
       height: 0 !important;
-      width: 0 !important;
-      max-height: 0 !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      position: absolute !important;
-      top: -9999px !important;
-      pointer-events: none !important;
+      opacity: 0 !important;
   }
 
-  /** 3. 修正主题基础样式 **/
-  #theme-starter {
-      background-color: black;
-      min-height: 100vh;
+  /** 输入框自动填充背景色修正（防止出现黄底白字） **/
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
+    transition: background-color 5000s ease-in-out 0s;
   }
 
-  #theme-starter .sticky {
-    position: fixed;
-    z-index: 20;
-    background-color: rgb(0 0 0 / 0.8);
-    backdrop-filter: blur(5px);
-    transition: all 0.3s;
-  }
-  
-  :is(.dark #theme-starter .sticky){
-    background-color: rgb(17 25 40 / 0.8);
+  /** 让页面滚动更加平滑 **/
+  html {
+    scroll-behavior: smooth;
   }
 
-  .text-body-color{
-    color: rgb(99 115 129);
-  }
-
-  /* 解决WOW.js可能导致的初始化不可见问题 */
-  .wow {
-    visibility: visible !important;
+  body {
+    background-color: black;
+    color: white;
+    -webkit-font-smoothing: antialiased;
   }
   `}</style>
 }
-
 export { Style }
