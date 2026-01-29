@@ -1,48 +1,53 @@
 /* eslint-disable react/no-unknown-property */
 const Style = () => {
   return <style jsx global>{`
-    /* 1. 彻底干掉顶部的灰色圆点和所有导航残留 */
-    .navbar-collapse, .navbar-collapse ul, .navbar-btn, li, nav {
+    /* 1. 彻底清除顶部导航栏及其所有残留元素（灰点） */
+    nav, header, .navbar, .navbar-collapse, li, .navbar-toggler {
         display: none !important;
         height: 0 !important;
+        width: 0 !important;
+        visibility: hidden !important;
         opacity: 0 !important;
+        pointer-events: none !important;
     }
-    
-    /* 2. 强制提升文字清晰度 */
-    .notion, .notion-text, .notion-list, .notion-quote {
+
+    /* 2. 内部会员页内容美化 */
+    .notion {
         color: #ffffff !important;
+        line-height: 1.6;
     }
     
-    /* 3. Notion 表格极致黑风格 */
+    /* 表格极致黑风格 */
     .notion-table {
-        background: #121212 !important;
+        background: #111 !important;
         border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 16px !important;
+        border-radius: 12px !important;
         overflow: hidden !important;
     }
     .notion-table-cell {
-        border: 1px solid rgba(255,255,255,0.06) !important;
-        padding: 15px !important;
-        color: #fff !important;
+        border: 1px solid rgba(255,255,255,0.05) !important;
+        padding: 12px !important;
     }
     
-    /* 4. 强行抹除底部乱码 */
-    #busuanzi_container_site_pv, footer, .py-10.bg-dark, #footer {
+    /* 3. 强行抹除底部统计乱码区域 */
+    #busuanzi_container_site_pv, footer, #footer, .py-10.bg-dark {
         display: none !important;
         height: 0 !important;
-        visibility: hidden !important;
     }
 
     body {
         background-color: #000 !important;
         margin: 0;
-        padding: 0;
         -webkit-font-smoothing: antialiased;
     }
 
-    /* 针对手机端表格自动横滑 */
-    .notion-table-content {
-      overflow-x: auto !important;
+    /* 针对你图片中提到的红色通知文本进行高亮处理 */
+    span[style*="color:red"], span[style*="color: rgb(255, 0, 0)"] {
+        background: rgba(255, 0, 0, 0.1) !important;
+        color: #ff4d4d !important;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-weight: 600;
     }
   `}</style>
 }
