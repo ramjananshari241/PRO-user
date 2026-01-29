@@ -1,42 +1,44 @@
 import { useGlobal } from '@/lib/global'
 import CommonHead from '@/components/CommonHead'
-import { Nav } from './components/Nav'
 import { Style } from './style'
 import NotionPage from '@/components/NotionPage'
 import { Hero } from './components/Hero'
 
-// 首页布局保持原样
+/**
+ * 首页布局 - 仅保留 Header 和 Hero
+ */
 const LayoutIndex = (props) => {
   return (
     <div id='theme-starter' className='min-h-screen bg-black antialiased'>
       <Style />
       <CommonHead {...props} />
-      <Nav {...props} />
+      {/* 彻底移除 Nav 组件 */}
       <Hero {...props} />
     </div>
   )
 }
 
-// 【核心优化】会员后台布局重构
+/**
+ * 会员个人数据页布局 - 深度美化版
+ */
 const LayoutSlug = (props) => {
   const { post } = props
   return (
     <div id='theme-starter' className='min-h-screen bg-[#050505] text-[#e5e5e5] antialiased'>
       <CommonHead {...props} />
       <Style />
-      <Nav {...props} />
-
-      {/* 后台主容器 */}
-      <main className="pt-28 pb-16 px-4 sm:px-6">
+      
+      {/* 后台主容器 - 调整了顶部间距 */}
+      <main className="pt-12 pb-16 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           
-          {/* 顶部标题卡片 */}
-          <div className="mb-6 p-8 rounded-3xl bg-[#0d0d0d] border border-white/5 shadow-2xl relative overflow-hidden group">
-             {/* 装饰光晕 */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-900/20 blur-[80px] rounded-full group-hover:bg-red-800/30 transition-all duration-700"></div>
+          {/* 顶部标题卡片 - 增加会员感 */}
+          <div className="mb-6 p-8 rounded-3xl bg-[#0d0d0d] border border-white/5 shadow-2xl relative overflow-hidden">
+             {/* 右上角微妙的装饰光晕 */}
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-900/20 blur-[80px] rounded-full"></div>
             
             <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-3 text-red-500 font-bold text-xs tracking-widest uppercase">
+                <div className="flex items-center gap-3 mb-3 text-red-500 font-bold text-[10px] tracking-widest uppercase">
                     <span className="flex h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
                     VIP Member Workspace
                 </div>
@@ -46,7 +48,7 @@ const LayoutSlug = (props) => {
             </div>
           </div>
 
-          {/* 内容展示卡片 - Vercel 风格 */}
+          {/* 数据展示大卡片 */}
           <div className="bg-[#0d0d0d] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
             <div className="p-6 md:p-10">
                {/* 页面内容渲染 */}
@@ -56,9 +58,9 @@ const LayoutSlug = (props) => {
             </div>
           </div>
 
-          {/* 底部版权 */}
-          <div className="mt-10 text-center opacity-20 hover:opacity-100 transition-opacity">
-            <p className="text-[10px] tracking-[0.4em] uppercase font-bold text-white">PRO+ Private Space</p>
+          {/* 页脚点缀 */}
+          <div className="mt-10 text-center opacity-10">
+            <p className="text-[9px] tracking-[0.5em] uppercase font-bold text-white text-center">PRO+ SECURE WORKSPACE</p>
           </div>
         </div>
       </main>
@@ -66,7 +68,7 @@ const LayoutSlug = (props) => {
   )
 }
 
-// 搜索页布局
+// 搜索页等其他页面也统一指向主布局，防止报错
 const LayoutSearch = (props) => <LayoutIndex {...props} />
 const LayoutArchive = (props) => <LayoutIndex {...props} />
 const Layout404 = (props) => <LayoutIndex {...props} />
