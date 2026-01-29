@@ -1,11 +1,24 @@
 import BLOG from '@/blog.config'
 import { getGlobalData } from '@/lib/db/getSiteData'
 import dynamic from 'next/dynamic'
+import { useEffect } from 'react'
 
-// 锁定主题为 starter
 const ThemeComponents = dynamic(() => import('@/themes/starter').then(m => m.LayoutIndex || m.default), { ssr: true })
 
 const Index = (props) => {
+  // --- 关键逻辑：仅在首页禁止滚动，解决底部乱码显示问题 ---
+  useEffect(() => {
+    // 禁止滚动
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+    
+    return () => {
+      // 当离开首页（跳转到子页面）时，恢复滚动
+      document.body.style.overflow = 'auto'
+      document.documentElement.style.overflow = 'auto'
+    }
+  }, [])
+
   return <ThemeComponents {...props} />
 }
 
@@ -18,9 +31,7 @@ export async function getStaticProps() {
     props: {
       ...props,
       allPages: allPages
-    },
-    // 【关键】恢复实时抓取：每隔 5 秒检测一次 Notion 更新
-    revalidate: BLOG.NEXT_REVALIDATE_SECOND || 5 
+    }
   }
 }
 
