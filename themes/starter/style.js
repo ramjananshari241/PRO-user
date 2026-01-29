@@ -1,43 +1,33 @@
 /* eslint-disable react/no-unknown-property */
 const Style = () => {
   return <style jsx global>{`
-    /* 1. 彻底干掉顶部的灰色圆点/残留按钮阴影 */
-    /* 针对导航栏中的所有 li 结构进行物理隐藏 */
-    .navbar-collapse ul li, 
-    .navbar-btn,
-    #navbarCollapse ul li:nth-child(2) { 
-        display: none !important; 
+    /* 1. 彻底干掉顶部的灰色圆点和所有导航残留 */
+    .navbar-collapse, .navbar-collapse ul, .navbar-btn, li, nav {
+        display: none !important;
+        height: 0 !important;
+        opacity: 0 !important;
     }
     
-    /* 2. 提升内部页面 Notion 内容的清晰度 */
-    .notion {
-        color: #ffffff !important; /* 强制纯白文字 */
+    /* 2. 强制提升文字清晰度 */
+    .notion, .notion-text, .notion-list, .notion-quote {
+        color: #ffffff !important;
     }
     
-    /* 3. Notion 表格专业化美化 */
+    /* 3. Notion 表格极致黑风格 */
     .notion-table {
-        background: #141414 !important;
+        background: #121212 !important;
         border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 12px !important;
-        color: #fff !important;
+        border-radius: 16px !important;
+        overflow: hidden !important;
     }
     .notion-table-cell {
-        border: 1px solid rgba(255,255,255,0.05) !important;
-        padding: 12px 15px !important;
+        border: 1px solid rgba(255,255,255,0.06) !important;
+        padding: 15px !important;
+        color: #fff !important;
     }
     
-    /* 4. 针对图片中的红色“通知”文字进行美化处理 */
-    span[style*="color:red"], span[style*="color: rgb(255, 0, 0)"] {
-        background: rgba(255, 0, 0, 0.15) !important;
-        color: #ff4d4d !important;
-        padding: 2px 8px !important;
-        border-radius: 6px !important;
-        font-weight: bold !important;
-        border: 1px solid rgba(255, 0, 0, 0.2);
-    }
-
-    /* 5. 再次强行隐藏底部乱码容器 */
-    #busuanzi_container_site_pv, footer, .py-10.bg-dark {
+    /* 4. 强行抹除底部乱码 */
+    #busuanzi_container_site_pv, footer, .py-10.bg-dark, #footer {
         display: none !important;
         height: 0 !important;
         visibility: hidden !important;
@@ -45,7 +35,14 @@ const Style = () => {
 
     body {
         background-color: #000 !important;
+        margin: 0;
+        padding: 0;
         -webkit-font-smoothing: antialiased;
+    }
+
+    /* 针对手机端表格自动横滑 */
+    .notion-table-content {
+      overflow-x: auto !important;
     }
   `}</style>
 }
