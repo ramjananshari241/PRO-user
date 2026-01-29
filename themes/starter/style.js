@@ -1,46 +1,51 @@
 /* eslint-disable react/no-unknown-property */
 const Style = () => {
   return <style jsx global>{`
-    /* 彻底消除顶部灰点残留 */
-    .navbar-collapse ul li:nth-child(2) { display: none !important; }
-    
-    /* 会员后台 Notion 内容深度优化 */
-    .notion {
-        color: #efefef !important; /* 提高文字亮度，确保清晰 */
+    /* 1. 彻底干掉顶部的灰色圆点/残留按钮阴影 */
+    /* 针对导航栏中的所有 li 结构进行物理隐藏 */
+    .navbar-collapse ul li, 
+    .navbar-btn,
+    #navbarCollapse ul li:nth-child(2) { 
+        display: none !important; 
     }
     
-    /* Notion 表格美化 */
+    /* 2. 提升内部页面 Notion 内容的清晰度 */
+    .notion {
+        color: #ffffff !important; /* 强制纯白文字 */
+    }
+    
+    /* 3. Notion 表格专业化美化 */
     .notion-table {
-        background: #121212 !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-        border-radius: 16px !important;
-        overflow: hidden !important;
+        background: #141414 !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 12px !important;
+        color: #fff !important;
     }
     .notion-table-cell {
         border: 1px solid rgba(255,255,255,0.05) !important;
-        padding: 14px !important;
-        font-size: 14px !important;
+        padding: 12px 15px !important;
     }
     
-    /* 针对标题美化 */
-    .notion-h1, .notion-h2, .notion-h3 {
-        color: #ffffff !important;
-        border-bottom: 1px solid rgba(255,255,255,0.1) !important;
-        padding-bottom: 10px !important;
-        font-weight: 800 !important;
+    /* 4. 针对图片中的红色“通知”文字进行美化处理 */
+    span[style*="color:red"], span[style*="color: rgb(255, 0, 0)"] {
+        background: rgba(255, 0, 0, 0.15) !important;
+        color: #ff4d4d !important;
+        padding: 2px 8px !important;
+        border-radius: 6px !important;
+        font-weight: bold !important;
+        border: 1px solid rgba(255, 0, 0, 0.2);
     }
 
-    /* 首页禁止滚动时强制背景色 */
+    /* 5. 再次强行隐藏底部乱码容器 */
+    #busuanzi_container_site_pv, footer, .py-10.bg-dark {
+        display: none !important;
+        height: 0 !important;
+        visibility: hidden !important;
+    }
+
     body {
         background-color: #000 !important;
         -webkit-font-smoothing: antialiased;
-    }
-
-    /* 强行抹除所有统计乱码容器 */
-    #busuanzi_container_site_pv, footer, .py-10.bg-dark {
-        display: none !important;
-        opacity: 0 !important;
-        height: 0 !important;
     }
   `}</style>
 }
