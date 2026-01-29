@@ -1,31 +1,46 @@
 /* eslint-disable react/no-unknown-property */
 const Style = () => {
   return <style jsx global>{`
-    /* 1. 彻底抹除导航残留 */
+    /* 彻底消除顶部灰点残留 */
     .navbar-collapse ul li:nth-child(2) { display: none !important; }
     
-    /* 2. 优化 Notion 表格在手机端的显示，防止撑破布局 */
-    .notion-table-content {
-      overflow-x: auto !important;
+    /* 会员后台 Notion 内容深度优化 */
+    .notion {
+        color: #efefef !important; /* 提高文字亮度，确保清晰 */
     }
     
-    /* 3. 提升文字清晰度 */
+    /* Notion 表格美化 */
+    .notion-table {
+        background: #121212 !important;
+        border: 1px solid rgba(255,255,255,0.08) !important;
+        border-radius: 16px !important;
+        overflow: hidden !important;
+    }
+    .notion-table-cell {
+        border: 1px solid rgba(255,255,255,0.05) !important;
+        padding: 14px !important;
+        font-size: 14px !important;
+    }
+    
+    /* 针对标题美化 */
+    .notion-h1, .notion-h2, .notion-h3 {
+        color: #ffffff !important;
+        border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+        padding-bottom: 10px !important;
+        font-weight: 800 !important;
+    }
+
+    /* 首页禁止滚动时强制背景色 */
     body {
-      background-color: #000 !important;
-      -webkit-font-smoothing: antialiased;
+        background-color: #000 !important;
+        -webkit-font-smoothing: antialiased;
     }
 
-    /* 4. 这里的样式专门针对子页面的卡片感 */
-    .notion-page {
-      padding: 0 !important;
-      width: 100% !important;
-    }
-
-    /* 5. 再次强行隐藏可能存在的乱码 */
+    /* 强行抹除所有统计乱码容器 */
     #busuanzi_container_site_pv, footer, .py-10.bg-dark {
-      display: none !important;
-      height: 0;
-      opacity: 0;
+        display: none !important;
+        opacity: 0 !important;
+        height: 0 !important;
     }
   `}</style>
 }
